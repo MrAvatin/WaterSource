@@ -10,6 +10,10 @@ import { db, FIREBASE_DB_CONFIG } from '../index';
 export default function Map() {
     
     const [markers, setMarkers] = useState([]);
+    const [selectedMarker, setSelectedMarker] = useState({
+        title: "",
+        quality: "",
+    });
 
     var gbLocs = {};
 
@@ -35,8 +39,36 @@ export default function Map() {
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     });
 
-    function markerSelect (e, pos){
-        console.log(pos)
+    function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal){
+        console.log("marker selected")
+        console.log(lat)
+        console.log(long)
+        console.log(totalpoints)
+        console.log(totalreviews)
+        console.log(safetypoints)
+        console.log(safetytotal)
+        var quality = "Unknown"
+        if(safetypoints/safetytotal >= 4 ){
+            quality = "Excellent"
+        } else if (safetypoints/safetytotal >= 3){
+            quality = "Good"
+        } else if (safetypoints/safetytotal >= 2){
+            quality = "Fair"
+        } else if (safetypoints/safetytotal >= 1){
+            quality = "Poor"
+        } else if (safetypoints/safetytotal >= 0){
+            quality = "Very Poor"
+        } else {
+            quality = "Unknown"
+        }
+
+        var title = "Latitude: " + lat + " Longitude: " + long
+
+        var item = {
+            title: title,
+            quality: quality,
+        }
+        setSelectedMarker(item)
         var modal = new Modal(document.getElementById('exampleModal'), {keyboard: false});
         modal.show();
     }
@@ -63,9 +95,9 @@ export default function Map() {
         totalpts = totalpts / totalreviews; // average rating
     
         var icoType = goodWater; // TODO: Change default to 'neutral / grey-water'
-    
+        console.log(totalpts);
         // Calculate the rating based on conditionals
-        if(totalpts = 0 || totalpts == 2.5)
+        if(totalpts == 0 || totalpts == 2.5)
           icoType = goodWater;
         else if(totalpts < 2.5)
           icoType = badWater;
@@ -127,7 +159,7 @@ export default function Map() {
                 
             }}>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Location</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{selectedMarker.title}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -140,7 +172,7 @@ export default function Map() {
                     </div>
                     <br></br>
                     <div class="d-flex justify-content-center">
-                        <h5>Water Quality: Good</h5>
+                        <h5>Water Quality: {selectedMarker.quality}</h5>
                     </div>
                     <br></br>
                     <br></br>
@@ -185,7 +217,7 @@ export default function Map() {
             options={{ mapId: "b8a0a866c50e62da", fullscreenControl: false, streetViewControl: false, mapTypeControl: false }}
         >
             {markers.map(marker => (
-                <MarkerF position={{ lat: marker.lat, lng: marker.long }} icon={badWater} onClick={(e) => markerSelect(e, e.latLng)} />
+                <MarkerF position={{ lat: marker.lat, lng: marker.long }} icon={marker.icoType} key={marker.id} onClick={(e) => markerSelect(marker.lat, marker.long, marker.totalpoints, marker.totalreviews, marker.safetypoints, marker.safetytotal)} />
             ))}
         </GoogleMap>
       </div>
