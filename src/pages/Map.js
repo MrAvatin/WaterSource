@@ -1,18 +1,23 @@
-import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, MarkerF, Autocomplete, } from '@react-google-maps/api';
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+  } from "use-places-autocomplete";
 import {Link } from "react-router-dom"
 import { useEffect, useState } from 'react';
-import SearchBar from '../components/searchbar';
 import { Modal } from 'bootstrap'
 import fountain from "../img/fountain1.jpg"
 import firebase from "firebase/app"
 import "firebase/firestore"
 import { db, FIREBASE_DB_CONFIG } from '../index';
 import { updateSafety } from '../DataHandler';
+import './searchbar.css'
 
 export default function Map() {
     
     const [markers, setMarkers] = useState([]);
     const [position, setPosition]= useState({ lat: 51.0769023071639, lng: -114.13136144860931 });
+    const [newLocation, setNewLocation] = useState("");
     const [selectedMarker, setSelectedMarker] = useState({
         title: "",
         quality: "",
@@ -59,6 +64,20 @@ export default function Map() {
             safetypoints: item.safetypoints + scoreadj,
           }, { merge: true });
       }
+
+    async function searchLocation(){
+        console.log(newLocation)
+        try {
+            const results = await getGeocode({ address: newLocation });
+            console.log(results);
+            const { lat, lng } = getLatLng(results[0]);
+            console.log(lat, lng);
+            setPosition({lat: lat, lng: lng});
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal, ID){
         var quality = "Unknown"
@@ -129,7 +148,54 @@ export default function Map() {
     return (
       <div >
         <div class="d-flex justify-content-center">
-            <SearchBar />
+        <div class="searchInputWrapper" style={{
+            position: 'absolute',
+            zIndex: 2,
+            maxWidth: '100%',
+        }}>
+            <div class="container" style={{
+                    paddingTop: "20px",
+                    maxWidth: "100wh",
+                }}>
+                <div class="row">
+                    <div class="col">
+                    <button style={{
+                border: "none",
+                background: "none",
+                paddingRight: "10px",
+                }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0d6efd" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                </svg>
+            </button>
+                    </div>
+                    <div class="col">
+                        <Autocomplete>
+                            <input 
+                                type="text"
+                                class="searchInput"
+                                placeholder="Search for a location"
+                                value={newLocation}
+                                onChange={event => setNewLocation(event.target.value)}
+                                onSelect={event => setNewLocation(event.target.value)}
+                                onInputC={event => console.log(event.target.value)}
+                            />
+                        </Autocomplete>
+                    </div>
+                    <div class="col">
+                    <button onClick={(e) => searchLocation()} style={{
+                        border: "none",
+                        background: "none",
+                        paddingLeft: "10px",
+                        }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0d6efd" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="d-flex justify-content-center">
         <button type="button" class="btn btn-primary " style={{

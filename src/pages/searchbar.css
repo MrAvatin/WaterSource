@@ -1,20 +1,4 @@
 /* Quick and dirty normalize hax */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: #eee;
-    color: #a1a1a1;
-    font-family: sans-serif;
-  }
-  
-  .heading {
-    margin-bottom: 1.5rem;
-    font-size: 1.2rem;
-  }
   
   .searchInputWrapper {
     position: relative;
