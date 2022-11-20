@@ -2,11 +2,19 @@ import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import {Link } from "react-router-dom"
 import * as React from 'react';
 import SearchBar from '../components/searchbar';
-
+import { db } from '../index';
+import { Modal } from 'bootstrap'
+import fountain from "../img/fountain1.jpg"
 export default function Map() {
     const { isLoaded } = useLoadScript({
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     });
+
+    function markerSelect (e, pos){
+        window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+        var modal = new Modal(document.getElementById('exampleModal'), {keyboard: false});
+        modal.show();
+    }
   
     if (!isLoaded) return (<div>Loading...</div>);
     
@@ -28,7 +36,7 @@ export default function Map() {
         scale: 1,
     }
     return (
-      <div>
+      <div >
         <div class="d-flex justify-content-center">
             <SearchBar />
         </div>
@@ -37,7 +45,7 @@ export default function Map() {
             position: 'absolute',
             bottom: "5%",
             zIndex: 3,
-        }}>Scan this area</button>
+        }} onClick={() => alert("Hello!")}>Scan this area</button>
         </div>
         <Link to="/">
         <button type="button"style={{
@@ -47,13 +55,77 @@ export default function Map() {
             border: "none",
             background: "none",
             zIndex: 4,
-        }}>
+        }} >
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#0d6efd" class="bi bi-house-fill" viewBox="0 0 16 16">
             <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
             <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
             </svg>
         </button>
         </Link>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style={{
+                position: 'absolute',
+                height: "90%",
+                width: "100%",
+                maxWidth: "100%",
+                margin: "0",
+                bottom: "0",
+            }}>
+                <div class="modal-content" style={{
+                position: 'absolute',
+                height: "100%",
+                width: "100%",
+                
+            }}>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Location</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <img src={fountain} alt='Image' style={{
+                            borderRadius: "50%",
+                            height: "25vh",
+                            width: "25vh",
+                        }}></img>
+                    </div>
+                    <br></br>
+                    <div class="d-flex justify-content-center">
+                        <h5>Water Quality: Good</h5>
+                    </div>
+                    <br></br>
+                    <br></br>
+                    <div class="d-flex justify-content-center">
+                        <h5>How was the water quality?</h5>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h5>Water Quality Review</h5>
+                    </div>
+                    <br></br>
+                    <br></br>
+                    <div class="d-flex justify-content-center">
+                        <h5>Was the area safe?</h5>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style={{
+                            width: "30vw",
+                            marginRight: "2vw",
+                        }}>Not Safe</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"style={{
+                            width: "30vw",
+                            marginLeft: "2vw",
+                        }}>Safe</button>
+                    </div>
+                </div>
+                
+
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Report</button>
+                </div>
+                </div>
+            </div>
+            </div>
 
         <GoogleMap style={{
             position: 'absolute',
@@ -64,11 +136,11 @@ export default function Map() {
             center={{ lat: 51.0769023071639, lng: -114.13136144860931 }}
             options={{ mapId: "b8a0a866c50e62da", fullscreenControl: false, streetViewControl: false, mapTypeControl: false }}
         >
-          <MarkerF position={{ lat: 51.07654873134196, lng: -114.13192798994598 }} icon={goodWater}/>
-          <MarkerF position={{ lat: 51.07659675909463, lng: -114.131879039469 }} icon={goodWater}/>
-          <MarkerF position={{ lat: 51.076694920666405, lng: -114.1316094765581 }} icon={badWater}/>
-          <MarkerF position={{ lat: 51.07671893449582, lng: -114.13146798965641 }} icon={goodWater}/>
-          <MarkerF position={{ lat: 51.076611504118, lng: -114.13132516250411 }} icon={badWater}/>
+          <MarkerF position={{ lat: 51.07654873134196, lng: -114.13192798994598 }} icon={badWater} onClick={(e) => markerSelect(e, e.latLng)}/>
+          <MarkerF position={{ lat: 51.07659675909463, lng: -114.131879039469 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
+          <MarkerF position={{ lat: 51.076694920666405, lng: -114.1316094765581 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
+          <MarkerF position={{ lat: 51.07671893449582, lng: -114.13146798965641 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
+          <MarkerF position={{ lat: 51.076611504118, lng: -114.13132516250411 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
         </GoogleMap>
       </div>
     );
