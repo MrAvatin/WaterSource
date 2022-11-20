@@ -47,12 +47,14 @@ export default function Map() {
     });
 
     function updateSafety(scoreadj) {
-        console.log("Updating safety for " + selectedMarker.ID + " to " + selectedMarker.safetytotal + " and " + selectedMarker.safetypoints);
-        const locRef = db.collection('waterstore').doc(selectedMarker.ID);  
+        var item = selectedMarker;
+        console.log(item);
+        console.log("Updating safety for " + item.ID + " to " + item.safetytotal + " and " + item.safetypoints);
+        const locRef = db.collection('waterstore').doc(item.ID);  
 
         const res = locRef.set({
-            safetytotal: selectedMarker.safetytotal + 1,
-            safetypoints: selectedMarker.safetypoints + scoreadj,
+            safetytotal: item.safetytotal + 1,
+            safetypoints: item.safetypoints + scoreadj,
           }, { merge: true });
       }
 
@@ -217,7 +219,7 @@ export default function Map() {
                 
 
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={(e) => updateSafety(0)}>Report </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={(e) => updateSafety( 0)}>Report </button>
                 </div>
                 </div>
             </div>
@@ -233,7 +235,7 @@ export default function Map() {
             options={{ mapId: "b8a0a866c50e62da", fullscreenControl: false, streetViewControl: false, mapTypeControl: false }}
         >
             {markers.map(marker => (
-                <MarkerF position={{ lat: marker.lat, lng: marker.long }} icon={marker.icoType} key={marker.id} onClick={(e) => markerSelect(marker.lat, marker.long, marker.totalpoints, marker.totalreviews, marker.safetypoints, marker.safetytotal, marker.ID)} />
+                <MarkerF position={{ lat: marker.lat, lng: marker.long }} icon={marker.icoType} key={marker.id} onClick={(e) => markerSelect(marker.lat, marker.long, marker.totalpoints, marker.totalreviews, marker.safetypoints, marker.safetytotal, marker.id)} />
             ))}
         </GoogleMap>
       </div>
