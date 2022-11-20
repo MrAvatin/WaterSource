@@ -5,11 +5,13 @@ import SearchBar from '../components/searchbar';
 import { Modal } from 'bootstrap'
 import fountain from "../img/fountain1.jpg"
 import "firebase/firestore"
-import { gbLocs, fetch } from '../index';
+import { db, FIREBASE_DB_CONFIG } from '../index';
 
 export default function Map() {
     
     const [markers, setMarkers] = useState([]);
+
+    var gbLocs = {};
 
     const goodWater = {
         path: "M12.4088 0.833313L11.0024 2.22161C10.5474 2.67076 0 13.2055 0 22.1477C0 28.8851 5.58394 34.3974 12.4088 34.3974C19.2336 34.3974 24.8175 28.8851 24.8175 22.1477C24.8175 13.2463 14.2701 2.67076 13.8151 2.22161L12.4088 0.833313V0.833313ZM6.20438 20.1061C7.36253 20.1061 8.27251 21.0044 8.27251 22.1477C8.27251 24.3935 10.1338 26.231 12.4088 26.231C13.5669 26.231 14.4769 27.1293 14.4769 28.2726C14.4769 29.4159 13.5669 30.3142 12.4088 30.3142C7.85888 30.3142 4.13625 26.6393 4.13625 22.1477C4.13625 21.0044 5.04623 20.1061 6.20438 20.1061Z",
@@ -42,6 +44,40 @@ export default function Map() {
         setMarkers(gbLocs);
         console.log(gbLocs);
     }
+    
+    const fetch = async () => {
+      const req = await db.collection('waterstore').get();
+      const tempLocs = req.docs.map((doc)=>({...doc.data(), id: doc.id}));
+      console.log(tempLocs);
+    
+      for(let i = 0; i < tempLocs.length; i++){
+        console.log('Location:', tempLocs[i].lat, tempLocs[i].long);
+      }
+    
+      for(let i = 0; i < tempLocs.length; i++) {
+        // Determine the correct icon for the marker
+        var totalpts = tempLocs[i].totalpoints;
+        var totalreviews = tempLocs[i].totalreviews;
+        totalpts = totalpts / totalreviews; // average rating
+    
+        var icoType = goodWater; // TODO: Change default to 'neutral / grey-water'
+    
+        // Calculate the rating based on conditionals
+        if(totalpts = 0 || totalpts == 2.5)
+          icoType = goodWater;
+        else if(totalpts < 2.5)
+          icoType = badWater;
+        else if(totalpts > 2.5)
+          icoType = goodWater;
+    
+        tempLocs[i].icoType = icoType;
+    
+        // Set list of locations
+        gbLocs = tempLocs;
+      }
+    }
+
+    fetch();
   
     if (!isLoaded) return (<div>Loading...</div>);
 
