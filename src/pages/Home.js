@@ -79,6 +79,17 @@ export default function Home() {
               </svg>
             </Link>
           </div>
+
+          <Link to="/about">
+            <button type="button" class="btn btn-primary" style={{
+                position: 'absolute',
+                bottom: "0%",
+                left: "2%",
+                zIndex: 4,
+            }} >
+              About Us
+            </button>
+            </Link>
       </body>
     </div>
   );

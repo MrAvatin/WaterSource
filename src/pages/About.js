@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import {Link } from "react-router-dom"
 
 export default function About() {
 
@@ -56,6 +56,16 @@ export default function About() {
           </div>
         </div>
       </div>
+      <Link to="/">
+            <button type="button" class="btn btn-primary" style={{
+                position: 'absolute',
+                bottom: "0%",
+                right: "2%",
+                zIndex: 4,
+            }} >
+              Home
+            </button>
+            </Link>
     </div>
   );
 }
