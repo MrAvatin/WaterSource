@@ -75,11 +75,6 @@ export default function Map() {
     const fetch = async () => {
       const req = await db.collection('waterstore').get();
       const tempLocs = req.docs.map((doc)=>({...doc.data(), id: doc.id}));
-      console.log(tempLocs);
-    
-      for(let i = 0; i < tempLocs.length; i++){
-        console.log('Location:', tempLocs[i].lat, tempLocs[i].long);
-      }
     
       for(let i = 0; i < tempLocs.length; i++) {
         // Determine the correct icon for the marker
@@ -88,7 +83,6 @@ export default function Map() {
         totalpts = totalpts / totalreviews; // average rating
     
         var icoType = goodWater; // TODO: Change default to 'neutral / grey-water'
-        console.log(totalpts);
         // Calculate the rating based on conditionals
         if(totalpts == 0 || totalpts == 2.5)
           icoType = goodWater;
