@@ -25,9 +25,11 @@ class SearchBar extends Component {
         <div class="searchInputWrapper" style={{
             position: 'absolute',
             zIndex: 2,
+            maxWidth: '100%',
         }}>
             <div class="container" style={{
                     paddingTop: "20px",
+                    maxWidth: "100wh",
                 }}>
                 <div class="row">
                     <div class="col">
