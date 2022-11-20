@@ -12,3 +12,29 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 ---
 
+WaterSource is a platform that aims to provide a combination of verified and crowdsourced data to enable worldwide access to water. As technology advances, mobile phones are becoming prevalent enough where it can act as a way to communicate and also as a central source of information for more people every day. With this increased access to technology, WaterSource aims to provide the information that these new users may find vital.
+
+### **User Interface**
+The site is designed to work on both mobile and desktop with a scalable UI. </br>
+<img alt="Desktop-UI" width=800 src="https://user-images.githubusercontent.com/78698227/202911670-07113bed-b789-4173-825e-92ed9c95e8ac.png">
+
+
+### **Architecture** </br>
+The software is built around a React JS framework with a cloud hosted NoSQL database and direct integration to the Google Maps and Firebase APIs
+
+### **Getting Started**
+To install, download NodeJS and run the following to install all dependencies:
+```
+npm install
+```
+To run, use the command
+```
+npm start
+```
+
+### **Environment**
+A google maps API key should be provided in a **.env** file located in the root folder, in the following format.
+```
+GOOGLE_MAPS_API_KEY = "API_TOKEN"
+```
+
