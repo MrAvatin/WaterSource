@@ -19,6 +19,8 @@ export default function Map() {
         ID: "",
         safetypoints: "",
         safetytotal: "",
+        totalpoints: "",
+        totalreviews: "",
     });
 
     var gbLocs = {};
@@ -60,15 +62,15 @@ export default function Map() {
 
     function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal, ID){
         var quality = "Unknown"
-        if(safetypoints/safetytotal >= 4 ){
+        if(totalpoints/totalreviews >= 4 ){
             quality = "Excellent"
-        } else if (safetypoints/safetytotal >= 3){
+        } else if (totalpoints/totalreviews >= 3){
             quality = "Good"
-        } else if (safetypoints/safetytotal >= 2){
+        } else if (totalpoints/totalreviews >= 2){
             quality = "Fair"
-        } else if (safetypoints/safetytotal >= 1){
+        } else if (totalpoints/totalreviews >= 1){
             quality = "Poor"
-        } else if (safetypoints/safetytotal >= 0){
+        } else if (totalpoints/totalreviews >= 0){
             quality = "Very Poor"
         } else {
             quality = "Unknown"
@@ -80,6 +82,8 @@ export default function Map() {
             title: title,
             quality: quality,
             ID: ID,
+            totalpoints: totalpoints,
+            totalreviews: totalreviews,
             safetypoints: safetypoints,
             safetytotal: safetytotal,
         }
