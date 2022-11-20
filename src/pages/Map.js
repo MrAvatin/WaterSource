@@ -1,4 +1,5 @@
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
+import {Link } from "react-router-dom"
 import * as React from 'react';
 import SearchBar from '../components/searchbar';
 
@@ -38,15 +39,30 @@ export default function Map() {
             zIndex: 3,
         }}>Scan this area</button>
         </div>
+        <Link to="/">
+        <button type="button"style={{
+            position: 'absolute',
+            bottom: "5%",
+            left: "5%",
+            border: "none",
+            background: "none",
+            zIndex: 4,
+        }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#0d6efd" class="bi bi-house-fill" viewBox="0 0 16 16">
+            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+            </svg>
+        </button>
+        </Link>
 
         <GoogleMap style={{
             position: 'absolute',
             zIndex: 2,
-        }}
-          mapContainerStyle={{ width: '100vw', height: '100vh' }}
-          zoom={20}
-          center={{ lat: 51.0769023071639, lng: -114.13136144860931 }}
-          options={{ mapId: "b8a0a866c50e62da" }}
+            }}
+            mapContainerStyle={{ width: '100vw', height: '100vh' }}
+            zoom={18}
+            center={{ lat: 51.0769023071639, lng: -114.13136144860931 }}
+            options={{ mapId: "b8a0a866c50e62da", fullscreenControl: false, streetViewControl: false, mapTypeControl: false }}
         >
           <MarkerF position={{ lat: 51.07654873134196, lng: -114.13192798994598 }} icon={goodWater}/>
           <MarkerF position={{ lat: 51.07659675909463, lng: -114.131879039469 }} icon={goodWater}/>
