@@ -40,13 +40,6 @@ export default function Map() {
     });
 
     function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal){
-        console.log("marker selected")
-        console.log(lat)
-        console.log(long)
-        console.log(totalpoints)
-        console.log(totalreviews)
-        console.log(safetypoints)
-        console.log(safetytotal)
         var quality = "Unknown"
         if(safetypoints/safetytotal >= 4 ){
             quality = "Excellent"
