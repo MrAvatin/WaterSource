@@ -24,45 +24,38 @@ var db = fbApp.firestore();
 
 export { db, FIREBASE_DB_CONFIG };
 
-var gbLocs = "";
 
-export { gbLocs };
+// const fetch = async () => {
+//   const req = await db.collection('waterstore').get();
+//   const tempLocs = req.docs.map((doc)=>({...doc.data(), id: doc.id}));
+//   console.log(tempLocs);
 
-const fetch = async () => {
-  const req = await db.collection('waterstore').get();
-  const tempLocs = req.docs.map((doc)=>({...doc.data(), id: doc.id}));
-  console.log(tempLocs);
+//   for(let i = 0; i < tempLocs.length; i++){
+//     console.log('Location:', tempLocs[i].lat, tempLocs[i].long);
+//   }
 
-  for(let i = 0; i < tempLocs.length; i++){
-    console.log('Location:', tempLocs[i].lat, tempLocs[i].long);
-  }
+//   for(let i = 0; i < tempLocs.length; i++) {
+//     // Determine the correct icon for the marker
+//     var totalpts = tempLocs[i].totalpoints;
+//     var totalreviews = tempLocs[i].totalreviews;
+//     totalpts = totalpts / totalreviews; // average rating
 
-  gbLocs = "";
+//     var icoType = "goodWater"; // TODO: Change default to 'neutral / grey-water'
 
-  for(let i = 0; i < tempLocs.length; i++) {
-    // Determine the correct icon for the marker
-    var totalpts = tempLocs[i].totalpoints;
-    var totalreviews = tempLocs[i].totalreviews;
-    totalpts = totalpts / totalreviews; // average rating
+//     // Calculate the rating based on conditionals
+//     if(totalpts = 0 || totalpts == 2.5)
+//       icoType = "goodWater";
+//     else if(totalpts < 2.5)
+//       icoType = "badWater";
+//     else if(totalpts > 2.5)
+//       icoType = "goodWater";
 
-    var icoType = "goodWater"; // TODO: Change default to 'neutral / grey-water'
+//       console.log("<MarkerF position={{ lat: " + tempLocs[i].lat + ", lng: " +  tempLocs[i].long + "}} icon={" + icoType + "}/>\n");
 
-    // Calculate the rating based on conditionals
-    if(totalpts = 0 || totalpts == 2.5)
-      icoType = "goodWater";
-    else if(totalpts < 2.5)
-      icoType = "badWater";
-    else if(totalpts > 2.5)
-      icoType = "goodWater";
-
-      console.log("<MarkerF position={{ lat: " + tempLocs[i].lat + ", lng: " +  tempLocs[i].long + "}} icon={" + icoType + "}/>\n");
-
-    // Add the marker to the list
-    gbLocs += "<MarkerF position={{ lat: " + tempLocs[i].lat + ", lng: " +  tempLocs[i].long + "}} icon={" + icoType + "}/>\n";
-  }
-}
-
-fetch();
+//     // Add the marker to the list
+//     gbLocs += "<MarkerF position={{ lat: " + tempLocs[i].lat + ", lng: " +  tempLocs[i].long + "}} icon={" + icoType + "}/>\n";
+//   }
+// }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
