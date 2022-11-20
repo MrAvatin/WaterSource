@@ -59,8 +59,8 @@ export default function About() {
       <Link to="/">
             <button type="button" class="btn btn-primary" style={{
                 position: 'absolute',
-                bottom: "0%",
-                right: "2%",
+                top: "0%",
+                left: "0%",
                 zIndex: 4,
             }} >
               Home
