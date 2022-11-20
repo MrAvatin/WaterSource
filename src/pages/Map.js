@@ -1,5 +1,6 @@
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import * as React from 'react';
+import SearchBar from '../components/searchbar';
 
 export default function Map() {
     const { isLoaded } = useLoadScript({
@@ -26,6 +27,8 @@ export default function Map() {
         scale: 1,
     }
     return (
+      <div>
+        <SearchBar />
         <GoogleMap
           mapContainerStyle={{ width: '100vw', height: '100vh' }}
           zoom={20}
@@ -38,5 +41,7 @@ export default function Map() {
           <MarkerF position={{ lat: 51.07671893449582, lng: -114.13146798965641 }} icon={goodWater}/>
           <MarkerF position={{ lat: 51.076611504118, lng: -114.13132516250411 }} icon={badWater}/>
         </GoogleMap>
-      );
-  }
+      </div>
+    );
+
+}
