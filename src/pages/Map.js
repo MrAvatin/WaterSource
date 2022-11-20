@@ -36,13 +36,15 @@ export default function Map() {
     });
 
     function markerSelect (e, pos){
+        console.log(pos)
         var modal = new Modal(document.getElementById('exampleModal'), {keyboard: false});
         modal.show();
     }
 
     function searchThisArea(){
         setMarkers(gbLocs);
-        console.log(gbLocs);
+        console.log("UPDATED MARKERS");
+        console.log(markers);
     }
     
     const fetch = async () => {
@@ -182,11 +184,9 @@ export default function Map() {
             center={{ lat: 51.0769023071639, lng: -114.13136144860931 }}
             options={{ mapId: "b8a0a866c50e62da", fullscreenControl: false, streetViewControl: false, mapTypeControl: false }}
         >
-          <MarkerF position={{ lat: 51.07654873134196, lng: -114.13192798994598 }} icon={badWater} onClick={(e) => markerSelect(e, e.latLng)}/>
-          <MarkerF position={{ lat: 51.07659675909463, lng: -114.131879039469 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
-          <MarkerF position={{ lat: 51.076694920666405, lng: -114.1316094765581 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
-          <MarkerF position={{ lat: 51.07671893449582, lng: -114.13146798965641 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
-          <MarkerF position={{ lat: 51.076611504118, lng: -114.13132516250411 }} icon={goodWater} onClick={(e) => markerSelect(e, e.latLng)}/>
+            {markers.map(marker => (
+                <MarkerF position={{ lat: marker.lat, lng: marker.long }} icon={badWater} onClick={(e) => markerSelect(e, e.latLng)} />
+            ))}
         </GoogleMap>
       </div>
     );
