@@ -167,7 +167,16 @@ export default function Map() {
                         <h5>How was the water quality?</h5>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <h5>Water Quality Review</h5>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style={{
+                            width: "35vw",
+                            marginRight: "2vw",
+                            maxWidth: "20vh",
+                        }}>Bad</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"style={{
+                            width: "35vw",
+                            maxWidth: "20vh",
+                            marginLeft: "2vw",
+                        }}>Good</button>
                     </div>
                     <br></br>
                     <br></br>
@@ -176,11 +185,13 @@ export default function Map() {
                     </div>
                     <div class="d-flex justify-content-center">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style={{
-                            width: "30vw",
+                            width: "35vw",
+                            maxWidth: "20vh",
                             marginRight: "2vw",
                         }}>Not Safe</button>
                         <button type="button" class="btn btn-success" data-bs-dismiss="modal"style={{
-                            width: "30vw",
+                            width: "35vw",
+                            maxWidth: "20vh",
                             marginLeft: "2vw",
                         }}>Safe</button>
                     </div>

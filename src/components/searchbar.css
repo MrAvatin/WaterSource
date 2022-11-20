@@ -21,7 +21,7 @@
   }
   
   .searchInput {
-    width: 50vw;
+    width: 40vw;
     height: 2rem;
     padding: 0 1rem; 
     border-radius: 2rem;
@@ -40,7 +40,7 @@
   
   .searchInput:focus {
     outline: none;
-    transform: scale(1.1);
+    transform: scale(1.2);
     transition: all 0.1s ease-in-out;
   }
   
