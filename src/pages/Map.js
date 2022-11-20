@@ -58,6 +58,22 @@ export default function Map() {
             safetytotal: item.safetytotal + 1,
             safetypoints: item.safetypoints + scoreadj,
           }, { merge: true });
+
+          fetch();
+      }
+
+      function updateQuality(scoreadj) {
+        var item = selectedMarker;
+        console.log(item);
+        console.log("Updating safety for " + item.ID + " to " + item.totalreviews + " and " + item.totalpoints);
+        const locRef = db.collection('waterstore').doc(item.ID);  
+
+        const res = locRef.set({
+            safetytotal: item.totalreviews + 1,
+            safetypoints: item.totalpoints + scoreadj,
+          }, { merge: true });
+
+          fetch();
       }
 
     function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal, ID){
@@ -191,12 +207,12 @@ export default function Map() {
                         <h5>How was the water quality?</h5>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style={{
+                        <button type="button" class="btn btn-danger" onClick={(e) => updateQuality(0)} data-bs-dismiss="modal" style={{
                             width: "35vw",
                             marginRight: "2vw",
                             maxWidth: "20vh",
                         }}>Bad</button>
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"style={{
+                        <button type="button" class="btn btn-success" onClick={(e) => updateSafety(5)} data-bs-dismiss="modal"style={{
                             width: "35vw",
                             maxWidth: "20vh",
                             marginLeft: "2vw",
@@ -208,12 +224,12 @@ export default function Map() {
                         <h5>Was the area safe?</h5>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style={{
+                        <button type="button" class="btn btn-danger" onClick={(e) => updateSafety(0)} data-bs-dismiss="modal" style={{
                             width: "35vw",
                             maxWidth: "20vh",
                             marginRight: "2vw",
                         }}>Not Safe</button>
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"style={{
+                        <button type="button" class="btn btn-success" onClick={(e) => updateSafety(5)} data-bs-dismiss="modal"style={{
                             width: "35vw",
                             maxWidth: "20vh",
                             marginLeft: "2vw",
