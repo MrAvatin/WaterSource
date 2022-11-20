@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import SearchBar from '../components/searchbar';
 import { Modal } from 'bootstrap'
 import fountain from "../img/fountain1.jpg"
+import firebase from "firebase/app"
 import "firebase/firestore"
 import { db, FIREBASE_DB_CONFIG } from '../index';
+import { updateSafety } from '../DataHandler';
 
 export default function Map() {
     
@@ -14,6 +16,9 @@ export default function Map() {
     const [selectedMarker, setSelectedMarker] = useState({
         title: "",
         quality: "",
+        ID: "",
+        safetypoints: "",
+        safetytotal: "",
     });
 
     var gbLocs = {};
@@ -41,7 +46,17 @@ export default function Map() {
       libraries: ['places'],
     });
 
-    function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal){
+    function updateSafety(scoreadj) {
+        console.log("Updating safety for " + selectedMarker.ID + " to " + selectedMarker.safetytotal + " and " + selectedMarker.safetypoints);
+        const locRef = db.collection('waterstore').doc(selectedMarker.ID);  
+
+        const res = locRef.set({
+            safetytotal: selectedMarker.safetytotal + 1,
+            safetypoints: selectedMarker.safetypoints + scoreadj,
+          }, { merge: true });
+      }
+
+    function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal, ID){
         var quality = "Unknown"
         if(safetypoints/safetytotal >= 4 ){
             quality = "Excellent"
@@ -62,6 +77,9 @@ export default function Map() {
         var item = {
             title: title,
             quality: quality,
+            ID: ID,
+            safetypoints: safetypoints,
+            safetytotal: safetytotal,
         }
         setSelectedMarker(item)
         var modal = new Modal(document.getElementById('exampleModal'), {keyboard: false});
@@ -194,7 +212,7 @@ export default function Map() {
                 
 
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Report</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={(e) => updateSafety(0)}>Report </button>
                 </div>
                 </div>
             </div>
@@ -210,7 +228,7 @@ export default function Map() {
             options={{ mapId: "b8a0a866c50e62da", fullscreenControl: false, streetViewControl: false, mapTypeControl: false }}
         >
             {markers.map(marker => (
-                <MarkerF position={{ lat: marker.lat, lng: marker.long }} icon={marker.icoType} key={marker.id} onClick={(e) => markerSelect(marker.lat, marker.long, marker.totalpoints, marker.totalreviews, marker.safetypoints, marker.safetytotal)} />
+                <MarkerF position={{ lat: marker.lat, lng: marker.long }} icon={marker.icoType} key={marker.id} onClick={(e) => markerSelect(marker.lat, marker.long, marker.totalpoints, marker.totalreviews, marker.safetypoints, marker.safetytotal, marker.ID)} />
             ))}
         </GoogleMap>
       </div>

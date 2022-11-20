@@ -4,17 +4,7 @@
 
 import firebase from "firebase/app"
 import "firebase/firestore"
-
-const FIREBASE_DB_CONFIG = {
-    apiKey: "AIzaSyBFtNlRrb6PZmQYjjpVQoa-hLioRo3f9KY",
-    authDomain: "waterstore-2.firebaseapp.com",
-    projectId: "waterstore-2",
-    storageBucket: "waterstore-2.appspot.com",
-    messagingSenderId: "523519992517",
-    appId: "1:523519992517:web:c85bdcd7ba711b752486ac",
-    measurementId: "G-H8H5QNZ22C"
-  };
-  
+import { db, FIREBASE_DB_CONFIG } from './index.js';
 
 /**
  * This class is responsible for handling data input and output.
