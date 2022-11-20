@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Home from './pages/Home';
 import Map from './pages/Map';
+import About from './pages/About';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
@@ -14,6 +15,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/map" element ={<Map />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
