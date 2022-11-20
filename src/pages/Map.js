@@ -28,8 +28,21 @@ export default function Map() {
     }
     return (
       <div>
-        <SearchBar />
-        <GoogleMap
+        <div class="d-flex justify-content-center">
+            <SearchBar />
+        </div>
+        <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-primary " style={{
+            position: 'absolute',
+            bottom: "5%",
+            zIndex: 3,
+        }}>Scan this area</button>
+        </div>
+
+        <GoogleMap style={{
+            position: 'absolute',
+            zIndex: 2,
+        }}
           mapContainerStyle={{ width: '100vw', height: '100vh' }}
           zoom={20}
           center={{ lat: 51.0769023071639, lng: -114.13136144860931 }}

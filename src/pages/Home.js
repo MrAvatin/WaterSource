@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <div>
       <header>
+        <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'/>
         <nav class="navbar justify-content-center">
           <div>
           <svg width="331" height="43" viewBox="0 0 331 43" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,9 +49,12 @@ export default function Home() {
             color: '#3C79A6',
             marginTop: '15vh',
             fontSize: '10vmin',
+            fontWeight: 'bold',
+            fontFamily: 'Jura',
           }} class="text-center">
             Clean water in the Palm of Your Hands
           </h1>
+          
         </div>
         <div class="d-flex justify-content-center" style={{marginTop: '10vh'}}>
             <Link to="/map">
