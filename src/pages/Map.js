@@ -5,18 +5,22 @@ import SearchBar from '../components/searchbar';
 import { db } from '../index';
 import { Modal } from 'bootstrap'
 import fountain from "../img/fountain1.jpg"
+import "firebase/firestore"
+import { gbLocs, fetch } from '../index';
+
 export default function Map() {
     const { isLoaded } = useLoadScript({
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     });
 
     function markerSelect (e, pos){
-        window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
         var modal = new Modal(document.getElementById('exampleModal'), {keyboard: false});
         modal.show();
     }
   
     if (!isLoaded) return (<div>Loading...</div>);
+
+    console.log("Hello: " + gbLocs);
     
     const goodWater = {
         path: "M12.4088 0.833313L11.0024 2.22161C10.5474 2.67076 0 13.2055 0 22.1477C0 28.8851 5.58394 34.3974 12.4088 34.3974C19.2336 34.3974 24.8175 28.8851 24.8175 22.1477C24.8175 13.2463 14.2701 2.67076 13.8151 2.22161L12.4088 0.833313V0.833313ZM6.20438 20.1061C7.36253 20.1061 8.27251 21.0044 8.27251 22.1477C8.27251 24.3935 10.1338 26.231 12.4088 26.231C13.5669 26.231 14.4769 27.1293 14.4769 28.2726C14.4769 29.4159 13.5669 30.3142 12.4088 30.3142C7.85888 30.3142 4.13625 26.6393 4.13625 22.1477C4.13625 21.0044 5.04623 20.1061 6.20438 20.1061Z",
@@ -35,6 +39,7 @@ export default function Map() {
         rotation: 0,
         scale: 1,
     }
+    
     return (
       <div >
         <div class="d-flex justify-content-center">
