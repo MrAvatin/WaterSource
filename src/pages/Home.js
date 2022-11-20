@@ -3,6 +3,7 @@ import * as React from 'react';
 import {Link } from "react-router-dom"
 
 
+
 export default function Home() {
   const customstyle = {
     backgroundImage: "img('../img/sand.jpg')",
@@ -27,8 +28,10 @@ export default function Home() {
       <Link to="/map">
         <button type="button" class="btn btn-primary">Go!</button>
       </Link>
+      
   
       </div>
+      
     </div>
   );
 }
