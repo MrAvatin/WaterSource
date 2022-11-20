@@ -11,14 +11,6 @@
     font-family: sans-serif;
   }
   
-  .container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
   .heading {
     margin-bottom: 1.5rem;
     font-size: 1.2rem;

@@ -10,6 +10,7 @@ import { db, FIREBASE_DB_CONFIG } from '../index';
 export default function Map() {
     
     const [markers, setMarkers] = useState([]);
+    const [position, setPosition]= useState({ lat: 51.0769023071639, lng: -114.13136144860931 });
     const [selectedMarker, setSelectedMarker] = useState({
         title: "",
         quality: "",
@@ -36,7 +37,8 @@ export default function Map() {
     }
     
     const { isLoaded } = useLoadScript({
-      googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+      googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+      libraries: ['places'],
     });
 
     function markerSelect (lat, long, totalpoints, totalreviews, safetypoints, safetytotal){
@@ -68,8 +70,6 @@ export default function Map() {
 
     function searchThisArea(){
         setMarkers(gbLocs);
-        console.log("UPDATED MARKERS");
-        console.log(markers);
     }
     
     const fetch = async () => {
@@ -206,7 +206,7 @@ export default function Map() {
             }}
             mapContainerStyle={{ width: '100vw', height: '100vh' }}
             zoom={18}
-            center={{ lat: 51.0769023071639, lng: -114.13136144860931 }}
+            center={position}
             options={{ mapId: "b8a0a866c50e62da", fullscreenControl: false, streetViewControl: false, mapTypeControl: false }}
         >
             {markers.map(marker => (
